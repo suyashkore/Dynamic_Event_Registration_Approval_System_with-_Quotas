@@ -1,0 +1,8 @@
+# Allow access to the application folder's controllers and views
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /Tasknew/
+
+    # Don't block access to controller and view files
+    RewriteCond %{REQUEST_URI} !^/application/
+</IfModule>
