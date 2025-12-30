@@ -1,43 +1,29 @@
-# डायनॅमिक इव्हेंट रजिस्ट्रेशन आणि अप्रूव्हल सिस्टम (Dynamic Event Registration & Approval System)
+Process Flow
+1. Admin Setup
 
-हा प्रोजेक्ट CodeIgniter 3 (CI3) मध्ये बनवला आहे. यामध्ये इव्हेंट्स तयार करणे, युजर्सचे रजिस्ट्रेशन घेणे आणि ते रजिस्ट्रेशन मंजूर (Approve) करण्याची प्रक्रिया आहे.
+Login: Log in as admin@example.com.
+Create Event: Create a new event (name, date, information).
+Dynamic Form: Set which questions should be in the form for the event (e.g., name, company, email).
+Quotas: Define how many seats are available for each role (e.g., 50 for Employee, 20 for External).
+Approval Bands: Define who should approve the registrations (e.g., Level 1: Manager, Level 2: Director).
 
-## 👥 भूमिका (Roles)
-1. **Admin (अॅडमिन):** इव्हेंट तयार करणे, कोटा (Quota) ठरवणे, अप्रूव्हलच्या पायऱ्या (Bands) सेट करणे आणि डायनॅमिक फॉर्म बनवणे.
-2. **User (Employee/External):** इव्हेंटसाठी रजिस्टर करणे.
-3. **Approver (Manager/Director):** आलेल्या अर्जांना मंजूर (Approve) किंवा नामंजूर (Reject) करणे.
+2. User Registration
 
----
+Login: Log in as emp1@example.com or guest@example.com.
+Register: Go to 'Upcoming Events', select the event, and fill out the form.
+Waitlist: If the event quota is full, the user gets the option to join the 'Waitlist'.
 
-## 🔄 प्रक्रिया (Process Flow)
+3. Approval Process
 
-### १. अॅडमिन सेटअप (Admin Setup)
-- **Login:** `admin@example.com` ने लॉगिन करा.
-- **Create Event:** नवीन इव्हेंट तयार करा (नाव, तारीख, माहिती).
-- **Dynamic Form:** इव्हेंटसाठी फॉर्ममध्ये कोणते प्रश्न असावेत (उदा. नाव, कंपनी, ईमेल) ते सेट करा.
-- **Quotas:** कोणत्या रोलसाठी किती जागा (Seats) आहेत ते ठरवा (उदा. Employee साठी ५०, External साठी २०).
-- **Approval Bands:** रजिस्ट्रेशन कोणाकडून अप्रूव्ह व्हायला पाहिजे ते ठरवा (उदा. लेव्हल १: मॅनेजर, लेव्हल २: डायरेक्टर).
+Login: Log in as manager@example.com or director@example.com.
+Dashboard: A list of pending applications will be visible on the dashboard.
+Action: The approver can view the application details (View Details) and choose to 'Approve' or 'Reject'.
+Flow: If there are multiple levels (e.g., first Manager, then Director), the application moves to the Director only after the Manager approves it.
 
-### २. युजर रजिस्ट्रेशन (User Registration)
-- **Login:** `emp1@example.com` किंवा `guest@example.com` ने लॉगिन करा.
-- **Register:** 'Upcoming Events' मध्ये जाऊन इव्हेंट निवडा आणि फॉर्म भरा.
-- **Waitlist:** जर इव्हेंटचा कोटा फुल झाला असेल, तर युजरला 'Waitlist' मध्ये राहण्याचा पर्याय मिळतो.
-
-### ३. अप्रूव्हल प्रक्रिया (Approval Process)
-- **Login:** `manager@example.com` किंवा `director@example.com` ने लॉगिन करा.
-- **Dashboard:** डॅशबोर्डवर पेंडिंग अर्जांची लिस्ट दिसेल.
-- **Action:** अप्रूव्हर अर्जातील माहिती (View Details) बघू शकतो आणि 'Approve' किंवा 'Reject' करू शकतो.
-- **Flow:** जर अनेक लेव्हल्स असतील (उदा. आधी मॅनेजर, मग डायरेक्टर), तर मॅनेजरने अप्रूव्ह केल्यावरच अर्ज डायरेक्टरकडे जाईल.
-
----
-
-## ⚙️ तांत्रिक माहिती (Technical Logic)
-
-### डायनॅमिक फॉर्म्स (Dynamic Forms)
-अॅडमिन प्रत्येक इव्हेंटसाठी वेगवेगळे फॉर्म फील्ड्स (Text, Email, Number, Dropdown) तयार करू शकतो. रजिस्ट्रेशन करताना सर्व्हर या फील्ड्सनुसार व्हॅलिडेशन करतो आणि डेटा JSON फॉरमॅटमध्ये सेव्ह करतो.
-
-### कोटा लॉजिक (Quota Logic)
-प्रत्येक इव्हेंट आणि रोलसाठी (Role) कोटा वेगळा असतो. 'Pending' आणि 'Approved' अर्जांना कोट्यामध्ये मोजले जाते.
-
-### अप्रूव्हल बँड्स (Approval Bands)
-अॅडमिन अप्रूव्हलचा क्रम (Sequence) ठरवतो. जर इव्हेंटला कोणतेही अप्रूव्हल बँड नसतील, तर रजिस्ट्रेशन आपोआप **Approved** होते.
+⚙️ Technical Logic
+Dynamic Forms
+The admin can create different form fields (Text, Email, Number, Dropdown) for each event. During registration, the server validates according to these fields and saves the data in JSON format.
+Quota Logic
+Each event has separate quotas per role. Both 'Pending' and 'Approved' applications are counted toward the quota.
+Approval Bands
+The admin defines the approval sequence. If no approval bands are set for the event, the registration is automatically marked as Approved.
